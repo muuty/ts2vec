@@ -5,10 +5,7 @@ from . import _eval_protocols as eval_protocols
 def generate_pred_samples(features, data, pred_len, drop=0):
     n = data.shape[1]
     features = features[:, :-pred_len]
-    if pred_len >= n:
-        raise ValueError(f"Prediction length {pred_len} is too large for data of shape {data.shape}")
-    labels = np.stack([data[:, i:min(1 + n + i - pred_len, n)] for i in range(pred_len)], axis=2)[:, 1:]
-
+    labels = np.stack([ data[:, i:1+n+i-pred_len] for i in range(pred_len)], axis=2)[:, 1:]
     features = features[:, drop:]
     labels = labels[:, drop:]
     return features.reshape(-1, features.shape[-1]), \
