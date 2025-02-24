@@ -147,7 +147,6 @@ class TS2Vec:
                 if self.after_iter_callback is not None:
                     self.after_iter_callback(self, loss.item())
 
-                break
             if interrupted:
                 break
             
