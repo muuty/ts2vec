@@ -6,6 +6,8 @@ from models import TSEncoder
 from models.losses import hierarchical_contrastive_loss
 from utils import take_per_row, split_with_nan, centerize_vary_length_series, torch_pad_nan
 import math
+from tqdm import tqdm
+
 
 class TS2Vec:
     '''The TS2Vec model'''
@@ -100,7 +102,7 @@ class TS2Vec:
             n_epoch_iters = 0
             
             interrupted = False
-            for batch in train_loader:
+            for batch in tqdm(train_loader):
                 if n_iters is not None and self.n_iters >= n_iters:
                     interrupted = True
                     break
@@ -144,7 +146,8 @@ class TS2Vec:
                 
                 if self.after_iter_callback is not None:
                     self.after_iter_callback(self, loss.item())
-            
+
+                break
             if interrupted:
                 break
             
